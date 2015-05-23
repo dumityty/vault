@@ -6,8 +6,14 @@ require '../vendor/autoload.php';
 // Include the DBHandler class.
 // require_once dirname(dirname(__FILE__)) . '/app/lib/DbHandler.php';
 // Include the Helper functions file.
-require_once dirname(dirname(__FILE__)) . '/app/lib/helper.php';
-require_once dirname(dirname(__FILE__)) . '/app/lib/encryption.php';
+// require_once dirname(dirname(__FILE__)) . '/app/lib/helper.php';
+// require_once dirname(dirname(__FILE__)) . '/app/lib/Vault.php';
+
+session_cache_limiter(false);
+session_start();
+
+// Include the main app file which includes routes, middleware, etc
+include dirname(dirname(__FILE__)) . '/app/includes.php';
 
 $app = new \Slim\Slim(array(
     'templates.path' => '../templates',
@@ -36,12 +42,32 @@ require dirname(dirname(__FILE__)) . '/app/routes/routes.php';
 // the default root endpoint
 $app->get('/', function() use ($app) {
 
-  $encrypted_txt = encrypt('123', 'secret');
-  $decrypted_txt = decrypt($encrypted_txt, 'secret');
+  $vault = "mastervault";
+  $key = "masterkey";
 
-  echo $encrypted_txt;
-  echo "<br>";
-  echo $decrypted_txt;
+  $v = new Vault($vault, $key);
+
+  $c = $v->getCredential('1');
+  krumo($c);
+
+  // $new_c = array(
+  //   'site' => 'google',
+  //   'username' => 'root',
+  //   'password' => 'root',
+  //   'url' => 'google.com',
+  // );
+  // $v->addCredential($new_c);
+
+  // $all = $v->getAllCredentials();
+  // krumo($all);
+
+  // $encrypted_txt = $v->encrypt('123', 'secret');
+  // $decrypted_txt = $v->decrypt($encrypted_txt, 'secret');
+
+  // echo $encrypted_txt;
+  // echo "<br>";
+  // echo $decrypted_txt;
+
 
   $app->render('routes/index.html.twig', array(
     'page_title' => 'SlimPHP Skeleton App'

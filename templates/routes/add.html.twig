@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+  <div class="row">
+    <div class="flash">
+      <p class="text-info">{{ flash.info }}</p>
+      <p class="text-danger">{{ flash.error }}</p>
+    </div>
+    <br>
+    <form name="addcredentialform" method="post" action="">
+      <div class="form-group">
+        <label for="site">Site</label>
+        <input type="textfield" class="form-control" id="site" name='site'></input>
+      </div>
+      <button type="submit" class="btn btn-success">Add</button>
+    </form>
+  </div>
+ {% endblock %}

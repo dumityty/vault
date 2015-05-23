@@ -1,4 +1,7 @@
 <?php
+session_cache_limiter(false);
+session_start();
+
 require '../vendor/autoload.php';
 
 // Include the app configuration file.
@@ -8,12 +11,6 @@ require '../vendor/autoload.php';
 // Include the Helper functions file.
 // require_once dirname(dirname(__FILE__)) . '/app/lib/helper.php';
 // require_once dirname(dirname(__FILE__)) . '/app/lib/Vault.php';
-
-session_cache_limiter(false);
-session_start();
-
-// Include the main app file which includes routes, middleware, etc
-include dirname(dirname(__FILE__)) . '/app/includes.php';
 
 $app = new \Slim\Slim(array(
     'templates.path' => '../templates',
@@ -33,22 +30,20 @@ $app->view->parserOptions = array(
 );
 $app->view->parserExtensions = array(new \Slim\Views\TwigExtension());
 
-// MIDDLEWARES
-require dirname(dirname(__FILE__)) . '/app/middleware/middleware.php';
-
-// ROUTES
-require dirname(dirname(__FILE__)) . '/app/routes/routes.php';
+// Include the main app file which includes routes, middleware, etc
+include dirname(dirname(__FILE__)) . '/app/includes.php';
 
 // the default root endpoint
 $app->get('/', function() use ($app) {
 
   $vault = "mastervault";
   $key = "masterkey";
-
   $v = new Vault($vault, $key);
 
-  $c = $v->getCredential('1');
-  krumo($c);
+  // $c = $v->getCredential('1');
+  // if (!isset($c)) {
+  //   $app->flashNow('error','Credential could not be found.');    
+  // }
 
   // $new_c = array(
   //   'site' => 'google',
@@ -68,11 +63,9 @@ $app->get('/', function() use ($app) {
   // echo "<br>";
   // echo $decrypted_txt;
 
-
   $app->render('routes/index.html.twig', array(
-    'page_title' => 'SlimPHP Skeleton App'
   ));
-});
+})->name('home');
 
 // example of endpoint that return json
 $app->get('/json-example', function() use ($app) {

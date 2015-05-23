@@ -11,10 +11,23 @@
   {#
     <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
   #}
+    <link rel="stylesheet" type="text/css" media="screen" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css" />
   {% endblock %}
 
   {% block javascripts %}
     <script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+    
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('#credentials').DataTable();
+      });
+    </script>
+
   {% endblock %}
+
+
 {% endblock %}

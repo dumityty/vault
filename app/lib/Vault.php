@@ -57,6 +57,10 @@ class Vault {
     $stmt->execute();
     $credential = $stmt->fetchObject();
 
+    if (!$credential) {
+      return null;
+    }
+    krumo($credential);
     // decrypt password here?
     $credential->password = $this->decrypt($credential->password);
 

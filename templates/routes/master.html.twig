@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+  <div class="row">
+    <div class="flash">
+      <p class="text-info">{{ flash.info }}</p>
+      <p class="text-danger">{{ flash.error }}</p>
+    </div>
+    <br>
+    {% if credentials is not empty %}
+    <table id="credentials" class="table table-hover">
+      <thead>
+        <tr>
+          <th>Site</th>
+          <th>Username</th>
+          <th>Password</th>
+          <th>URL</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          {% for c in credentials %}
+          <td>{{ c.site }}</td>
+          <td>{{ c.username }}</td>
+          <td><a href="{{urlFor('home')}}">{{ c.id }}</a></td>
+          <td>{{ c.url }}</td>
+          {% endfor %}
+        </tr>
+      </tbody>
+    </table>
+    {% endif %}
+  </div>
+{% endblock %}

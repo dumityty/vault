@@ -2,17 +2,26 @@
 
 {% block content %}
   <div class="row">
-    <div class="flash">
-      <p class="text-info">{{ flash.info }}</p>
-      <p class="text-danger">{{ flash.error }}</p>
-    </div>
-    <br>
-    <form name="addcredentialform" method="post" action="">
+    <form id="credential-add" name="form-credential-add" method="post" action="" accept-charset="UTF-8" autocomplete="off">
       <div class="form-group">
-        <label for="site">Site</label>
-        <input type="textfield" class="form-control" id="site" name='site'></input>
+        <label for="edit-site" class="control-label">Site name</label>
+        <input type="textfield" id="edit-site" name="site" value="{{ c.site }}" size="15" maxlength="60" class="form-control required">
       </div>
-      <button type="submit" class="btn btn-success">Add</button>
+      <div class="form-group">
+        <label for="edit-username" class="control-label">Username</label>
+        <input type="textfield" id="edit-username" name="username" value="{{ c.username }}" size="15" maxlength="60" class="form-control required">
+      </div>
+      <div class="form-group">
+        <label for="edit-password" class="control-label">Password</label>
+        <input type="password" id="edit-password" name="password" value="{{ c.password }}" size="15" maxlength="60" class="form-control required">
+      </div>
+      <div class="form-group">
+        <label for="edit-url" class="control-label">URL</label>
+        <input type="textfield" id="edit-url" name="url" value="{{ c.url }}" size="15" maxlength="60" class="form-control required">
+      </div>
+      <div class="form-group clearfix" id="edit-actions">
+        <input type="submit" id="edit-submit" name="op" value="Save" class="btn btn-  default pull-right">
+      </div>
     </form>
   </div>
  {% endblock %}

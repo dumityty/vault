@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+  <div class="row">
+    <div class="flash">
+      <p class="text-info">{{ flash.info }}</p>
+      <p class="text-danger">{{ flash.error }}</p>
+    </div>
+    <br>
+    <div class="text-center">
+    	{{ credential.password }}
+    </div>
+  </div>
+{% endblock %}

@@ -2,11 +2,6 @@
 
 {% block content %}
   <div class="row">
-    <div class="flash">
-      <p class="text-info">{{ flash.info }}</p>
-      <p class="text-danger">{{ flash.error }}</p>
-    </div>
-    <br>
     {% if credentials is not empty %}
     <table id="credentials" class="table table-hover">
       <thead>
@@ -15,17 +10,19 @@
           <th>Username</th>
           <th>Password</th>
           <th>URL</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          {% for c in credentials %}
-          <td>{{ c.site }}</td>
-          <td>{{ c.username }}</td>
-          <td><a href="{{urlFor('home')}}">{{ c.id }}</a></td>
-          <td>{{ c.url }}</td>
-          {% endfor %}
-        </tr>
+        {% for c in credentials %}
+          <tr>
+            <td>{{ c.site }}</td>
+            <td>{{ c.username }}</td>
+            <td><a href="{{urlFor('masterone', {'id': c.id } )}}"><span class="glyphicon glyphicon-eye-open"></span></a></td>
+            <td>{{ c.url }}</td>
+            <td><a href="{{urlFor('masteredit', {'id': c.id } )}}">edit</a> | <a href="{{urlFor('masterdelete', {'id': c.id } )}}">delete</a></td>
+          </tr>
+        {% endfor %}
       </tbody>
     </table>
     {% endif %}

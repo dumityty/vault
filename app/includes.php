@@ -19,4 +19,5 @@ foreach ($routes as $key => $file) {
 // OTHER
 include dirname(__FILE__) . "/config.php";
 include dirname(__FILE__) . "/lib/helper.php";
+include dirname(__FILE__) . "/lib/User.php";
 include dirname(__FILE__) . "/lib/Vault.php";

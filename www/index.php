@@ -33,35 +33,17 @@ $app->view->parserExtensions = array(new \Slim\Views\TwigExtension());
 // Include the main app file which includes routes, middleware, etc
 include dirname(dirname(__FILE__)) . '/app/includes.php';
 
+/**
+ * Add username and settings variable to view
+ */
+$app->hook('slim.before.dispatch', function () use ($app) {
+    $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
+    $app->view()->setData('user', $user);
+});
+
 // the default root endpoint
 $app->get('/', function() use ($app) {
-
-  $vault = "mastervault";
-  $key = "masterkey";
-  $v = new Vault($vault, $key);
-
-  // $c = $v->getCredential('1');
-  // if (!isset($c)) {
-  //   $app->flashNow('error','Credential could not be found.');    
-  // }
-
-  // $new_c = array(
-  //   'site' => 'google',
-  //   'username' => 'root',
-  //   'password' => 'root',
-  //   'url' => 'google.com',
-  // );
-  // $v->addCredential($new_c);
-
-  // $all = $v->getAllCredentials();
-  // krumo($all);
-
-  // $encrypted_txt = $v->encrypt('123', 'secret');
-  // $decrypted_txt = $v->decrypt($encrypted_txt, 'secret');
-
-  // echo $encrypted_txt;
-  // echo "<br>";
-  // echo $decrypted_txt;
+  $app->redirectTo('master');
 
   $app->render('routes/index.html.twig', array(
   ));

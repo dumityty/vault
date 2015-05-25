@@ -9,7 +9,34 @@
     <div class="container-fluid">
       <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
     	<!-- <div class="col-sm-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4"> -->
-		    {% block content %}
+        <div class="row">
+  		    <div class="flash">
+            {% if flash.info is iterable %}
+              {% for info in flash.info %}
+                <p class="text-info">{{ info }}</p>
+              {% endfor %}
+            {% else %}
+              <p class="text-info">{{ flash.info }}</p>        
+            {% endif %}
+            {% if flash.success is iterable %}
+              {% for success in flash.success %}
+                <p class="text-success">{{ success }}</p>
+              {% endfor %}
+            {% else %}
+              <p class="text-success">{{ flash.success }}</p>        
+            {% endif %}
+            {% if flash.error is iterable %}
+              {% for error in flash.error %}
+                <p class="text-danger">{{ error }}</p>
+              {% endfor %}
+            {% else %}
+              <p class="text-danger">{{ flash.error }}</p>        
+            {% endif %}
+
+            
+          </div>
+        </div>
+        {% block content %}
 		    {% endblock %}
 	  	</div>
 	  </div>

@@ -47,7 +47,19 @@ class Vault {
       ':password' => $this->encrypt($credential['password']),
       ':url' => $credential['url'],
     ));
-    krumo($id);
+    return $id;
+  }
+  public function editCredential($credential) {
+    $sql = "UPDATE Credentials SET site=:site, username=:username, password=:password, url=:url WHERE id = :id";
+    $query = $this->v->prepare($sql);
+    $id = $query->execute(array(
+      ':site' => $credential['site'],
+      ':username' => $credential['username'],
+      ':password' => $this->encrypt($credential['password']),
+      ':url' => $credential['url'],
+      ':id' => $credential['id'],
+    ));
+    return $id;
   }
 
   public function getCredential($id) {
@@ -60,11 +72,20 @@ class Vault {
     if (!$credential) {
       return null;
     }
-    krumo($credential);
+    // krumo($credential);
+   
     // decrypt password here?
     $credential->password = $this->decrypt($credential->password);
 
     return $credential;
+  }
+
+  public function deleteCredential($id) {
+    $sql = "DELETE FROM Credentials WHERE id = :id";
+    $stmt = $this->v->prepare($sql);
+    $stmt->bindParam("id", $id);
+    $delete = $stmt->execute();
+    return $delete;
   }
 
   public function getAllCredentials() {

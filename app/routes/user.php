@@ -4,8 +4,14 @@
  * User login
  */
 $app->get('/user/login', $isLogged($app), function() use ($app) {
-	krumo('login');
 	krumo($_SESSION);
+  
+  // $user['email'] = 'titi@zoocha.com';
+  // $user['key'] = '123';
+  // $u = new User();
+  // $id = $u->add($user);
+  // krumo($id);
+
 
 	$app->render('routes/user/user_login.html.twig', array());
 })->name('login');
@@ -19,7 +25,7 @@ $app->post('/user/login', $isLogged($app), function() use ($app) {
   $user = new User();
   if ($user->login($post_data)) {
   	$_SESSION['user'] = $user;
-  	krumo($_SESSION);  	
+  	krumo($_SESSION);
 		// $app->redirectTo('master');
   }
   else {

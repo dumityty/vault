@@ -31,6 +31,10 @@ class Vault {
     $this->key = $key;
   }
 
+  // CHANGE THIS INSTALL method!!
+  // if you access a :vault route in the future you can just create any vault you want 
+  // simply because the constructor just creates any sqlite files!
+  // wtf
   private function vault_install() {
     $newvault = new PDO("sqlite:" . $this->vault_file);
     // $newvault->exec("PRAGMA key = 'secretkey'");

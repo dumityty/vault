@@ -3,7 +3,7 @@
 /**
  * List all credentials in master vault
  */
-$app->get('/master', $authenticate($app), function() use ($app) {
+$app->get('/:vault', $authenticate($app), function($vault) use ($app) {
 	$vault = "mastervault";
   $key = "masterkey";
   $v = new Vault($vault, $key);
@@ -16,12 +16,12 @@ $app->get('/master', $authenticate($app), function() use ($app) {
 /**
  * Add new credential in master vault
  */
-$app->get('/master/add', $authenticate($app), function() use ($app) {
+$app->get('/:vault/add', $authenticate($app), function() use ($app) {
   // krumo($_SESSION);
   $app->render('routes/add.html.twig', array());
-})->name('masteradd');  
+})->name('add');  
 
-$app->post('/master/add', function() use ($app) {
+$app->post('/:vault/add', function($vault) use ($app) {
   $vault = "mastervault";
   $key = "masterkey";
   $v = new Vault($vault, $key);
@@ -59,7 +59,7 @@ $app->post('/master/add', function() use ($app) {
   $app->redirectTo("master");
 }); 
 
-$app->get('/master/:id', $authenticate($app), function($id) use ($app) {
+$app->get('/:vault/:id', $authenticate($app), function($vault,$id) use ($app) {
 	$vault = "mastervault";
   $key = "masterkey";
   $v = new Vault($vault, $key);
@@ -68,9 +68,9 @@ $app->get('/master/:id', $authenticate($app), function($id) use ($app) {
   $app->render('routes/masterone.html.twig', array(
   	'credential' => $credential,
   ));
-})->name('masterone');
+})->name('vaultone');
 
-$app->get('/master/:id/edit', $authenticate($app), function($id) use ($app) {
+$app->get('/:vault/:id/edit', $authenticate($app), function($vault,$id) use ($app) {
   $vault = "mastervault";
   $key = "masterkey";
   $v = new Vault($vault, $key);
@@ -81,7 +81,7 @@ $app->get('/master/:id/edit', $authenticate($app), function($id) use ($app) {
   ));
 })->name('masteredit');
 
-$app->post('/master/:id/edit', $authenticate($app), function($id) use ($app) {
+$app->post('/:vault/:id/edit', $authenticate($app), function($vault,$id) use ($app) {
   $vault = "mastervault";
   $key = "masterkey";
   $v = new Vault($vault, $key);

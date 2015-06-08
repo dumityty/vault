@@ -2,6 +2,12 @@
 
 {% block content %}
   <div class="row">
+    <div class="col-md-12">
+      <a href="{{urlFor('add')}}" class="btn btn-success pull-right">Add</a>
+    </div>
+  </div>
+  <br>
+  <div class="row">
     {% if credentials is not empty %}
     <table id="credentials" class="table table-hover">
       <thead>
@@ -10,6 +16,7 @@
           <th>Username</th>
           <th>Password</th>
           <th>URL</th>
+          <th>Comment</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -20,11 +27,14 @@
             <td>{{ c.username }}</td>
             <td><a href="{{urlFor('masterone', {'id': c.id } )}}"><span class="glyphicon glyphicon-eye-open"></span></a></td>
             <td>{{ c.url }}</td>
+            <td>{{ c.comment }}</td>
             <td><a href="{{urlFor('masteredit', {'id': c.id } )}}">edit</a> | <a href="{{urlFor('masterdelete', {'id': c.id } )}}">delete</a></td>
           </tr>
         {% endfor %}
       </tbody>
     </table>
+    {% else %}
+      <p class="text-danger text-center">No credentials found.</p
     {% endif %}
   </div>
 {% endblock %}

@@ -34,29 +34,31 @@ class Vault {
   private function vault_install() {
     $newvault = new PDO("sqlite:" . $this->vault_file);
     // $newvault->exec("PRAGMA key = 'secretkey'");
-    $newvault->exec("CREATE TABLE Credentials (id INTEGER PRIMARY KEY, site TEXT, username TEXT, password TEXT, url TEXT)");
+    $newvault->exec("CREATE TABLE Credentials (id INTEGER PRIMARY KEY, site TEXT, username TEXT, password TEXT, url TEXT, comment TEXT)");
     return $newvault;
   }
 
   public function addCredential($credential) {
-    $sql = "INSERT INTO Credentials (site, username, password, url) VALUES (:site, :username, :password, :url)";
+    $sql = "INSERT INTO Credentials (site, username, password, url, comment) VALUES (:site, :username, :password, :url, :comment)";
     $query = $this->v->prepare($sql);
     $id = $query->execute(array(
       ':site' => $credential['site'],
       ':username' => $credential['username'],
       ':password' => $this->encrypt($credential['password']),
       ':url' => $credential['url'],
+      ':comment' => $credential['comment'],
     ));
     return $id;
   }
   public function editCredential($credential) {
-    $sql = "UPDATE Credentials SET site=:site, username=:username, password=:password, url=:url WHERE id = :id";
+    $sql = "UPDATE Credentials SET site=:site, username=:username, password=:password, url=:url, comment=:comment WHERE id = :id";
     $query = $this->v->prepare($sql);
     $id = $query->execute(array(
       ':site' => $credential['site'],
       ':username' => $credential['username'],
       ':password' => $this->encrypt($credential['password']),
       ':url' => $credential['url'],
+      ':comment' => $credential['comment'],
       ':id' => $credential['id'],
     ));
     return $id;
@@ -89,7 +91,7 @@ class Vault {
   }
 
   public function getAllCredentials() {
-    $sql = "SELECT id,site,username,url FROM Credentials ORDER BY site ASC";
+    $sql = "SELECT id,site,username,url,comment FROM Credentials ORDER BY site ASC";
     $stmt = $this->v->query($sql);
     $credentials = $stmt->fetchAll(PDO::FETCH_OBJ);
 

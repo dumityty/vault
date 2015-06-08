@@ -13,24 +13,24 @@
   		    <div class="flash">
             {% if flash.info is iterable %}
               {% for info in flash.info %}
-                <p class="text-info">{{ info }}</p>
+                <div class="alert alert-info" role="alert">{{ info }}</div>
               {% endfor %}
-            {% else %}
-              <p class="text-info">{{ flash.info }}</p>        
+            {% elseif flash.info is not empty %}
+              <div class="alert alert-info" role="alert">{{ flash.info }}</div>
             {% endif %}
             {% if flash.success is iterable %}
               {% for success in flash.success %}
-                <p class="text-success">{{ success }}</p>
+                <div class="alert alert-success" role="alert">{{ success }}</div>
               {% endfor %}
-            {% else %}
-              <p class="text-success">{{ flash.success }}</p>        
+            {% elseif flash.success is not empty %}
+              <div class="alert alert-success" role="alert">{{ flash.success }}</div>
             {% endif %}
             {% if flash.error is iterable %}
               {% for error in flash.error %}
-                <p class="text-danger">{{ error }}</p>
+                <div class="alert alert-danger" role="alert">{{ error }}</div>
               {% endfor %}
-            {% else %}
-              <p class="text-danger">{{ flash.error }}</p>        
+            {% elseif flash.error is not empty %}
+              <div class="alert alert-danger" role="alert">{{ flash.error }}</div>
             {% endif %}
 
             

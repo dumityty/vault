@@ -8,7 +8,6 @@ $app->get('/master', $authenticate($app), function() use ($app) {
   $key = "masterkey";
   $v = new Vault($vault, $key);
   $credentials = $v->getAllCredentials();
-  // krumo($credentials);
   $app->render('routes/master.html.twig', array(
   	'credentials' => $credentials,
   ));
@@ -17,7 +16,7 @@ $app->get('/master', $authenticate($app), function() use ($app) {
 /**
  * Add new credential in master vault
  */
-$app->get('/master/add', function() use ($app) {
+$app->get('/master/add', $authenticate($app), function() use ($app) {
   // krumo($_SESSION);
   $app->render('routes/add.html.twig', array());
 })->name('masteradd');  
@@ -60,7 +59,7 @@ $app->post('/master/add', function() use ($app) {
   $app->redirectTo("master");
 }); 
 
-$app->get('/master/:id', function($id) use ($app) {
+$app->get('/master/:id', $authenticate($app), function($id) use ($app) {
 	$vault = "mastervault";
   $key = "masterkey";
   $v = new Vault($vault, $key);
@@ -71,7 +70,7 @@ $app->get('/master/:id', function($id) use ($app) {
   ));
 })->name('masterone');
 
-$app->get('/master/:id/edit', function($id) use ($app) {
+$app->get('/master/:id/edit', $authenticate($app), function($id) use ($app) {
   $vault = "mastervault";
   $key = "masterkey";
   $v = new Vault($vault, $key);
@@ -82,7 +81,7 @@ $app->get('/master/:id/edit', function($id) use ($app) {
   ));
 })->name('masteredit');
 
-$app->post('/master/:id/edit', function($id) use ($app) {
+$app->post('/master/:id/edit', $authenticate($app), function($id) use ($app) {
   $vault = "mastervault";
   $key = "masterkey";
   $v = new Vault($vault, $key);
@@ -97,7 +96,7 @@ $app->post('/master/:id/edit', function($id) use ($app) {
   $app->redirectTo("master");  
 });
 
-$app->get('/master/:id/delete', function($id) use ($app) {
+$app->get('/master/:id/delete', $authenticate($app), function($id) use ($app) {
   $vault = "mastervault";
   $key = "masterkey";
   $v = new Vault($vault, $key);

@@ -19,6 +19,10 @@
         <label for="edit-url" class="control-label">URL</label>
         <input type="textfield" id="edit-url" name="url" value="{{ c.url }}" size="15" maxlength="60" class="form-control required">
       </div>
+      <div class="form-group">
+        <label for="edit-comment" class="control-label">Comment</label>
+        <textarea id="edit-comment" name="comment" value="{{ c.comment }}" rows="3" class="form-control"></textarea>
+      </div>
       <div class="form-group clearfix" id="edit-actions">
         <input type="submit" id="edit-submit" name="op" value="Save" class="btn btn-  default pull-right">
       </div>

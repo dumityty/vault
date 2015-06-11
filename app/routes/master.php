@@ -3,7 +3,7 @@
 /**
  * List all credentials in master vault
  */
-$app->get('/:vault', $authenticate($app), function($vault) use ($app) {
+$app->get('/v/:vault', $authenticate($app), function($vault) use ($app) {
 	$vault = "mastervault";
   $key = "masterkey";
   $v = new Vault($vault, $key);
@@ -11,17 +11,17 @@ $app->get('/:vault', $authenticate($app), function($vault) use ($app) {
   $app->render('routes/master.html.twig', array(
   	'credentials' => $credentials,
   ));
-})->name('master');
+})->name('vault');
 
 /**
  * Add new credential in master vault
  */
-$app->get('/:vault/add', $authenticate($app), function() use ($app) {
+$app->get('/v/:vault/add', $authenticate($app), function() use ($app) {
   // krumo($_SESSION);
   $app->render('routes/add.html.twig', array());
-})->name('add');  
+})->name('credentialadd');  
 
-$app->post('/:vault/add', function($vault) use ($app) {
+$app->post('/v/:vault/add', function($vault) use ($app) {
   $vault = "mastervault";
   $key = "masterkey";
   $v = new Vault($vault, $key);
@@ -59,7 +59,7 @@ $app->post('/:vault/add', function($vault) use ($app) {
   $app->redirectTo("master");
 }); 
 
-$app->get('/:vault/:id', $authenticate($app), function($vault,$id) use ($app) {
+$app->get('/v/:vault/:id', $authenticate($app), function($vault,$id) use ($app) {
 	$vault = "mastervault";
   $key = "masterkey";
   $v = new Vault($vault, $key);
@@ -68,9 +68,9 @@ $app->get('/:vault/:id', $authenticate($app), function($vault,$id) use ($app) {
   $app->render('routes/masterone.html.twig', array(
   	'credential' => $credential,
   ));
-})->name('vaultone');
+})->name('credentialone');
 
-$app->get('/:vault/:id/edit', $authenticate($app), function($vault,$id) use ($app) {
+$app->get('/v/:vault/:id/edit', $authenticate($app), function($vault,$id) use ($app) {
   $vault = "mastervault";
   $key = "masterkey";
   $v = new Vault($vault, $key);
@@ -79,9 +79,9 @@ $app->get('/:vault/:id/edit', $authenticate($app), function($vault,$id) use ($ap
   $app->render('routes/add.html.twig', array(
     'c' => $credential,
   ));
-})->name('masteredit');
+})->name('credentialedit');
 
-$app->post('/:vault/:id/edit', $authenticate($app), function($vault,$id) use ($app) {
+$app->post('/v/:vault/:id/edit', $authenticate($app), function($vault,$id) use ($app) {
   $vault = "mastervault";
   $key = "masterkey";
   $v = new Vault($vault, $key);
@@ -93,10 +93,10 @@ $app->post('/:vault/:id/edit', $authenticate($app), function($vault,$id) use ($a
   } else {
     $app->flash('error','Error while editing credential.');
   }
-  $app->redirectTo("master");  
+  $app->redirectTo("vault");  
 });
 
-$app->get('/master/:id/delete', $authenticate($app), function($id) use ($app) {
+$app->get('/v/:vault/:id/delete', $authenticate($app), function($id) use ($app) {
   $vault = "mastervault";
   $key = "masterkey";
   $v = new Vault($vault, $key);
@@ -106,4 +106,4 @@ $app->get('/master/:id/delete', $authenticate($app), function($id) use ($app) {
     $app->flash('error','Error while deleting credential.');
   }
   $app->redirectTo("master");  
-})->name('masterdelete');
+})->name('credentialdelete');

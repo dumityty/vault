@@ -3,7 +3,7 @@
 {% block content %}
   <div class="row">
     <div class="col-md-12">
-      <a href="{{urlFor('add')}}" class="btn btn-success pull-right">Add</a>
+      <a href="{{urlFor('credentialadd',{"vault":vault})}}" class="btn btn-success pull-right">Add</a>
     </div>
   </div>
   <br>
@@ -25,10 +25,10 @@
           <tr>
             <td>{{ c.site }}</td>
             <td>{{ c.username }}</td>
-            <td><a href="{{urlFor('masterone', {'id': c.id } )}}"><span class="glyphicon glyphicon-eye-open"></span></a></td>
+            <td><a href="{{urlFor('credentialone', {'vault': vault, 'id': c.id } )}}"><span class="glyphicon glyphicon-eye-open"></span></a></td>
             <td>{{ c.url }}</td>
             <td>{{ c.comment }}</td>
-            <td><a href="{{urlFor('masteredit', {'id': c.id } )}}">edit</a> | <a href="{{urlFor('masterdelete', {'id': c.id } )}}">delete</a></td>
+            <td><a href="{{urlFor('credentialedit', {'vault': vault, 'id': c.id } )}}">edit</a> | <a href="{{urlFor('credentialdelete', {'vault': vault, 'id': c.id } )}}">delete</a></td>
           </tr>
         {% endfor %}
       </tbody>

@@ -37,13 +37,22 @@ include dirname(dirname(__FILE__)) . '/app/includes.php';
  * Add username and settings variable to view
  */
 $app->hook('slim.before.dispatch', function () use ($app) {
-    $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
+    $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;  
     $app->view()->setData('user', $user);
+    
+    // check if on a vault route
+    $route = $app->router()->getCurrentRoute();
+    $params = $route->getParams();
+    // $vault = $route->getParam('vault');
+
+    if (isset($params['vault'])) {
+      $app->view()->setData('vault', $params['vault']);
+    }
 });
 
 // the default root endpoint
 $app->get('/', function() use ($app) {
-  $app->redirectTo('master');
+  $app->redirectTo('vault', array('vault' => 'master'));
 
   $app->render('routes/index.html.twig', array(
   ));

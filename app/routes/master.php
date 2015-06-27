@@ -4,8 +4,10 @@
  * List all credentials in master vault
  */
 $app->get('/v/:vault', $authenticate($app), function($vault) use ($app) {
-	$vault = "mastervault";
-  $key = "masterkey";
+	// $vault = "master";
+  
+  // $key = "masterkey";
+  $key = $_SESSION['user']['keys']['master'];
   $v = new Vault($vault, $key);
   $credentials = $v->getAllCredentials();
   $app->render('routes/master.html.twig', array(
@@ -22,8 +24,8 @@ $app->get('/v/:vault/add', $authenticate($app), function() use ($app) {
 })->name('credentialadd');  
 
 $app->post('/v/:vault/add', function($vault) use ($app) {
-  $vault = "mastervault";
-  $key = "masterkey";
+
+  $key = $_SESSION['user']['keys']['master'];
   $v = new Vault($vault, $key);
 
   $post_data = $app->request->post();
@@ -56,12 +58,11 @@ $app->post('/v/:vault/add', function($vault) use ($app) {
     $app->flash('error','Error while adding credential.');
   }
 
-  $app->redirectTo("master");
+  $app->redirectTo("vault", array('vault'=>$vault));
 }); 
 
 $app->get('/v/:vault/:id', $authenticate($app), function($vault,$id) use ($app) {
-	$vault = "mastervault";
-  $key = "masterkey";
+  $key = $_SESSION['user']['keys']['master'];
   $v = new Vault($vault, $key);
   $credential = $v->getCredential($id);
   // krumo($credential);
@@ -71,8 +72,7 @@ $app->get('/v/:vault/:id', $authenticate($app), function($vault,$id) use ($app) 
 })->name('credentialone');
 
 $app->get('/v/:vault/:id/edit', $authenticate($app), function($vault,$id) use ($app) {
-  $vault = "mastervault";
-  $key = "masterkey";
+  $key = $_SESSION['user']['keys']['master'];
   $v = new Vault($vault, $key);
   $credential = $v->getCredential($id);
 
@@ -82,7 +82,7 @@ $app->get('/v/:vault/:id/edit', $authenticate($app), function($vault,$id) use ($
 })->name('credentialedit');
 
 $app->post('/v/:vault/:id/edit', $authenticate($app), function($vault,$id) use ($app) {
-  $vault = "mastervault";
+  $vault = "master";
   $key = "masterkey";
   $v = new Vault($vault, $key);
 

@@ -68,4 +68,8 @@ class User {
     return $id;
   }
 
+  public function getKey($vault = "master") {
+    return "masterkey2";
+  }
+
  }

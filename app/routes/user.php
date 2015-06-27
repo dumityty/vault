@@ -17,6 +17,12 @@ $app->post('/user/login', $isLogged($app), function() use ($app) {
   if ($user->login($post_data)) {
   	$_SESSION['user'] = array(
       'id' => $user->id,
+      'keys' => array(
+        // then when you try to access a different vault you will go to a form
+        // which you then fill to decrypt the specific key for that vault
+        // by default get master or personal vault key? - for testing now just get master
+        'master' => $user->getKey(),
+      ),
     );
 		if (isset($_SESSION['login_redirect'])) {
       $login_redirect = $_SESSION['login_redirect'];

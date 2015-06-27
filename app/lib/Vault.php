@@ -19,7 +19,7 @@ class Vault {
    * @param string $vault [description]
    * @param string $key   [description]
    */
-  public function __construct($vault = "mastervault", $key = "masterkey") {
+  public function __construct($vault = "master", $key = "") {
     $this->vault_file = ROOT_DIR . "/data/" . $vault . ".sqlite";
     if (!file_exists($this->vault_file)) {
       $this->v = $this->vault_install();
@@ -100,6 +100,8 @@ class Vault {
     $credentials = $stmt->fetchAll(PDO::FETCH_OBJ);
 
     // decrypt password here?
+    krumo($credentials);
+
 
     return $credentials;
   }
